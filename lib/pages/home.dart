@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/forecast.dart';
+import 'package:weather_app/services/image_service.dart';
 import 'package:weather_app/services/weather_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,19 +13,38 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String cityName = '';
+  String imageBaseUrl = 'http://openweathermap.org/img/wn/';
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(cityName),
+        title: const Text('Weather Forecast'),
+        actions: [
+          Container(
+            width: size.width / 3,
+            height: kToolbarHeight,
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            color: Colors.white30,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Search city',
+                border: InputBorder.none,
+                icon: Icon(Icons.search),
+              ),
+              onFieldSubmitted: (String? input) {
+                setState(() => cityName = input!);
+              },
+            ),
+          ),
+        ],
       ),
       body: cityName == ''
-          ? Center(
-              child: TextField(
-                onSubmitted: (String input) {
-                  setState(() => cityName = input);
-                },
+          ? const Center(
+              child: Text(
+                'Search weather forecast for your city',
               ),
             )
           : FutureBuilder<Forecast>(
@@ -35,7 +55,11 @@ class _HomePageState extends State<HomePage> {
                   final Forecast data = snapshot.data!;
                   return Center(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Image.network(
+                          getIcon(iconId: data.iconId),
+                        ),
                         Text(data.weather),
                         Text('${data.temperature}'),
                       ],
@@ -44,8 +68,10 @@ class _HomePageState extends State<HomePage> {
                 }
 
                 if (snapshot.hasError) {
-                  return const Center(
-                    child: Text('Something went wrong'),
+                  return Center(
+                    child: SelectableText(
+                      'Something went wrong: ${snapshot.error}',
+                    ),
                   );
                 }
 
