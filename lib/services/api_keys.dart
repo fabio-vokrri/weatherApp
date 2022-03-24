@@ -2,7 +2,6 @@ import 'dart:io';
 
 enum Service {
   openWeatherMapService,
-  unsplashService,
 }
 
 /// get the API key for the specified service from a file
@@ -12,6 +11,5 @@ Future<String> getKey({required Service api}) async {
   final File docFile = File(docPath);
 
   if (api == Service.openWeatherMapService) return docFile.readAsLinesSync()[0];
-  if (api == Service.unsplashService) return docFile.readAsLinesSync()[1];
   throw Exception('Wrong service required');
 }

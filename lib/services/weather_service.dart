@@ -6,7 +6,7 @@ import 'package:weather_app/models/forecast.dart';
 import 'package:weather_app/services/api_keys.dart';
 
 /// Get the current weather for the specified city form OpenWeatherMap API
-Future<Forecast> getWeather({required String cityName}) async {
+Future<Forecast> getWeather({String? cityName = 'Legnano'}) async {
   final String key = await getKey(api: Service.openWeatherMapService);
 
   final Uri url = Uri.parse(
@@ -23,4 +23,3 @@ Future<Forecast> getWeather({required String cityName}) async {
 String getIcon({required String iconId}) {
   return 'http://openweathermap.org/img/wn/$iconId@4x.png';
 }
-

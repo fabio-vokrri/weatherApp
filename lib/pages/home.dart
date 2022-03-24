@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/components/app_bar.dart';
+import 'package:weather_app/components/body.dart';
 import 'package:weather_app/models/forecast.dart';
-import 'package:weather_app/services/image_service.dart';
 import 'package:weather_app/services/weather_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,65 +13,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String cityName = '';
-  String imageBaseUrl = 'http://openweathermap.org/img/wn/';
+  String? cityName;
+
+  void searchCity(String input) {
+    setState(() => cityName = input);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Weather Forecast'),
-        actions: [
-          Container(
-            width: size.width / 3,
-            height: kToolbarHeight,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-            color: Colors.white30,
-            child: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Search city',
-                border: InputBorder.none,
-                icon: Icon(Icons.search),
-              ),
-              onFieldSubmitted: (String? input) {
-                setState(() => cityName = input!);
-              },
-            ),
-          ),
-        ],
-      ),
-      body: cityName == ''
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.amber,
+      appBar: CustomAppBar(searchCity: searchCity),
+      body: cityName == null
           ? const Center(
-              child: Text(
-                'Search weather forecast for your city',
-              ),
+              child: Text('Search the weather in your city!'),
             )
           : FutureBuilder<Forecast>(
               future: getWeather(cityName: cityName),
-              builder:
-                  (BuildContext context, AsyncSnapshot<Forecast> snapshot) {
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<Forecast> snapshot,
+              ) {
                 if (snapshot.hasData) {
                   final Forecast data = snapshot.data!;
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.network(
-                          getIcon(iconId: data.iconId),
-                        ),
-                        Text(data.weather),
-                        Text('${data.temperature}'),
-                      ],
-                    ),
+                  return Body(
+                    data: data,
+                    cityName: cityName,
                   );
                 }
 
                 if (snapshot.hasError) {
                   return Center(
                     child: SelectableText(
-                      'Something went wrong: ${snapshot.error}',
+                      'Something went wrong: ${snapshot.error}\n'
+                      'Try again!',
                     ),
                   );
                 }
