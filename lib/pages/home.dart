@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/components/app_bar.dart';
 import 'package:weather_app/components/body.dart';
@@ -23,38 +25,53 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.amber,
       appBar: CustomAppBar(searchCity: searchCity),
-      body: cityName == null
-          ? const Center(
-              child: Text('Search the weather in your city!'),
-            )
-          : FutureBuilder<Forecast>(
-              future: getWeather(cityName: cityName),
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<Forecast> snapshot,
-              ) {
-                if (snapshot.hasData) {
-                  final Forecast data = snapshot.data!;
-                  return Body(
-                    data: data,
-                    cityName: cityName,
-                  );
-                }
-
-                if (snapshot.hasError) {
-                  return Center(
-                    child: SelectableText(
-                      'Something went wrong: ${snapshot.error}\n'
-                      'Try again!',
-                    ),
-                  );
-                }
-
-                return const Center(child: CircularProgressIndicator());
-              },
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.blue[500]!,
+                  Colors.blue[900]!,
+                ],
+              ),
             ),
+          ),
+          cityName == null
+              ? const Center(
+                  child: Text('Search the weather in your city!'),
+                )
+              : FutureBuilder<Forecast>(
+                  future: getWeather(cityName: cityName),
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<Forecast> snapshot,
+                  ) {
+                    if (snapshot.hasData) {
+                      final Forecast data = snapshot.data!;
+                      return Body(
+                        data: data,
+                        cityName: cityName,
+                      );
+                    }
+
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: SelectableText(
+                          'Something went wrong: ${snapshot.error}\n'
+                          'Try again!',
+                        ),
+                      );
+                    }
+
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+        ],
+      ),
     );
   }
 }

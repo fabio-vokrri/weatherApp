@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather_app/models/forecast.dart';
 import 'package:weather_app/services/weather_service.dart';
+import 'package:weather_app/services/string_extension.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -17,18 +18,17 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            SvgPicture.asset(
+              'assets/icons/${data.iconId}.svg',
+              color: Colors.black54,
               height: size.height / 2,
-              child: Image.network(
-                getIcon(iconId: data.iconId),
-                fit: BoxFit.cover,
-              ),
             ),
+            const SizedBox(width: 16.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -37,32 +37,35 @@ class Body extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 Text(
-                  '${data.description} - ${data.temperature}°C',
+                  '${data.description.capitalize()} - ${data.temperature}°C',
                   style: Theme.of(context).textTheme.headline2,
+                ),
+                Text(
+                  'Humidity: ${data.humidity}%',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                Text(
+                  'Pressure: ${data.pressure} hPa',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Wind Speed: ${data.windSpeed} m/s',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    const SizedBox(width: 16),
+                    Transform.rotate(
+                      angle: data.windDirection.toDouble() - 180,
+                      child: SvgPicture.asset(
+                        'assets/icons/arrow.svg',
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              'Humidity: ${data.humidity}%',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              'Pressure: ${data.pressure}',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              'Wind Speed: ${data.windSpeed}',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Transform.rotate(
-              angle: data.windDirection.toDouble() - 180,
-              child: SvgPicture.asset('assets/icons/arrow-up.svg'),
-            )
           ],
         ),
       ],

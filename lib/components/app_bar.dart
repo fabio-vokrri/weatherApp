@@ -10,26 +10,36 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: const Text('Weather Forecast'),
+      title: const Text(
+        'CURRENT WEATHER',
+        style: TextStyle(
+          color: Colors.black54,
+          fontSize: 32,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
       actions: [
         Container(
           padding: const EdgeInsets.all(16),
-          width: size.width / 4,
+          width: size.width / 3,
           child: TextFormField(
-            cursorColor: Colors.amber[900],
+            cursorColor: Colors.blue[900],
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.amber[900]!,
+                  color: Colors.blue[900]!,
                 ),
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.amber[800]!,
+                  color: Colors.blue[800]!,
                 ),
               ),
               hintText: 'Search city',
-              icon: const Icon(Icons.search),
+              icon: Icon(
+                Icons.search,
+                color: Colors.blue[900],
+              ),
             ),
             onFieldSubmitted: searchCity,
           ),
