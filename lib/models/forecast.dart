@@ -29,7 +29,7 @@ class Forecast {
       weather: json['weather'][0]['main']! as String,
       description: json['weather'][0]['description']! as String,
       temperature:
-          double.parse((json['main']['temp']! - kelvin).toStringAsFixed(2)),
+          double.parse((json['main']['temp']! - kelvin).toStringAsFixed(1)),
       pressure: json['main']['pressure']! as int,
       humidity: json['main']['humidity']! as int,
       windSpeed: json['wind']['speed']! as double,

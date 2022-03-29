@@ -56,10 +56,11 @@ class Body extends StatelessWidget {
                     ),
                     const SizedBox(width: 16),
                     Transform.rotate(
-                      angle: data.windDirection.toDouble() - 180,
+                      angle: data.windDirection.toDouble() - 90,
                       child: SvgPicture.asset(
                         'assets/icons/arrow.svg',
                         color: Colors.black54,
+                        height: 32,
                       ),
                     ),
                   ],
