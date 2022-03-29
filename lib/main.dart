@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/pages.dart';
+import 'pages/home.dart';
 
 void main(List<String> args) {
   runApp(const Weather());
