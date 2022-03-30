@@ -24,7 +24,7 @@ class WeatherInformation extends StatelessWidget {
           style: textTheme.headline1,
         ),
         Text(
-          '${data.description.capitalize()} - ${data.temperature}°C',
+          '${data.description.capitalize()} • ${data.temperature}°C',
           style: textTheme.headline2,
         ),
         Text(
@@ -39,7 +39,7 @@ class WeatherInformation extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Wind Speed: ${data.windSpeed} m/s',
+              'Wind: ${data.windSpeed} m/s',
               style: textTheme.headline3,
             ),
             const SizedBox(width: 16),

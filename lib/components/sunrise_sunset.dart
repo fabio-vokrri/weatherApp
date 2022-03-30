@@ -1,17 +1,34 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/models/forecast.dart';
 import 'package:weather_app/ui/semicircle.dart';
 
-class SunriseSunset extends StatelessWidget {
-  SunriseSunset({
+class SunriseSunset extends StatefulWidget {
+  const SunriseSunset({
     Key? key,
     required this.data,
   }) : super(key: key);
 
   final Forecast data;
 
+  @override
+  State<SunriseSunset> createState() => _SunriseSunsetState();
+}
+
+class _SunriseSunsetState extends State<SunriseSunset> {
   final formatter = DateFormat('Hm');
+  late Forecast data;
+
+  @override
+  void initState() {
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) => setState(() {}),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +45,16 @@ class SunriseSunset extends StatelessWidget {
           CustomPaint(
             size: const Size(300, 300),
             painter: Progress(
-              sunset: data.sunset,
-              sunrise: data.sunrise,
+              sunset: widget.data.sunset,
+              sunrise: widget.data.sunrise,
               now: DateTime.now(),
               color: Colors.blue[900]!,
             ),
-            child: Center(
-              child: Text(
-                formatter.format(DateTime.now()),
-                style: textTheme.headline3,
-              ),
+          ),
+          Center(
+            child: Text(
+              'Now: ${formatter.format(DateTime.now())}',
+              style: textTheme.headline2,
             ),
           ),
           Positioned(
@@ -48,12 +65,12 @@ class SunriseSunset extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    formatter.format(data.sunrise),
+                    formatter.format(widget.data.sunrise),
                     style: textTheme.bodyText2,
                   ),
                   const Spacer(),
                   Text(
-                    formatter.format(data.sunset),
+                    formatter.format(widget.data.sunset),
                     style: textTheme.bodyText2,
                   ),
                 ],
