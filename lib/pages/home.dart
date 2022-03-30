@@ -41,8 +41,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           cityName == null
-              ? const Center(
-                  child: Text('Search the weather in your city!'),
+              ? Center(
+                  child: Text(
+                    'Search the weather in your city!',
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
                 )
               : FutureBuilder<Forecast>(
                   future: getWeather(cityName: cityName),

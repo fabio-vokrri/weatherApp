@@ -6,8 +6,8 @@ class Forecast {
   final int humidity;
   final double windSpeed;
   final int windDirection;
-  final int sunrise;
-  final int sunset;
+  final DateTime sunrise;
+  final DateTime sunset;
   final String iconId;
 
   const Forecast({
@@ -34,8 +34,10 @@ class Forecast {
       humidity: json['main']['humidity']! as int,
       windSpeed: json['wind']['speed']! as double,
       windDirection: json['wind']['deg'] as int,
-      sunrise: json['sys']['sunrise']! as int,
-      sunset: json['sys']['sunset']! as int,
+      sunrise:
+          DateTime.fromMillisecondsSinceEpoch(json['sys']['sunrise']! * 1000),
+      sunset:
+          DateTime.fromMillisecondsSinceEpoch(json['sys']['sunset']! * 1000),
       iconId: json['weather'][0]['icon']! as String,
     );
   }

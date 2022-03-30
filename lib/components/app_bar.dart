@@ -6,36 +6,25 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: const Text(
-        'CURRENT WEATHER',
-        style: TextStyle(
-          color: Colors.black54,
-          fontSize: 32,
-          fontWeight: FontWeight.w600,
-        ),
+      title: Text(
+        'Current Weather',
+        style: textTheme.headline2,
       ),
       actions: [
         Container(
           padding: const EdgeInsets.all(16),
           width: size.width / 3,
-          child: TextFormField(
+          child: TextFormField( 
             cursorColor: Colors.blue[900],
+            style: textTheme.bodyText1,
             decoration: InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.blue[900]!,
-                ),
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.blue[800]!,
-                ),
-              ),
               hintText: 'Search city',
+              hintStyle: textTheme.bodyText1,
               icon: Icon(
                 Icons.search,
                 color: Colors.blue[900],
