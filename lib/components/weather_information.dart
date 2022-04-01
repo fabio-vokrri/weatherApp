@@ -8,23 +8,26 @@ class WeatherInformation extends StatelessWidget {
     Key? key,
     required this.cityName,
     required this.data,
+    required this.isColumn,
   }) : super(key: key);
 
   final String? cityName;
   final Forecast data;
+  final bool isColumn;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isColumn ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
         Text(
           cityName!.toUpperCase(),
           style: textTheme.headline1,
         ),
         Text(
-          '${data.description.capitalize()} • ${data.temperature}°C',
+          '${data.description.capitalize()}  •  ${data.temperature}°C',
           style: textTheme.headline2,
         ),
         Text(
@@ -36,7 +39,8 @@ class WeatherInformation extends StatelessWidget {
           style: textTheme.headline3,
         ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment:
+              isColumn ? MainAxisAlignment.start : MainAxisAlignment.center,
           children: [
             Text(
               'Wind: ${data.windSpeed} m/s',

@@ -16,9 +16,9 @@ class SemiCircle extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 5;
 
-    final Rect rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    const Rect rect = Rect.fromLTWH(0, 0, 300, 300);
     final Path path = Path();
-    path.addArc(rect, 0, -math.pi);
+    path.addArc(rect, math.pi, math.pi);
     canvas.drawPath(path, paint);
   }
 
@@ -49,13 +49,16 @@ class Progress extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 20;
 
-    final Rect rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    const Rect rect = Rect.fromLTWH(0, 0, 300, 300);
     final Path path = Path();
 
-    final double percentage = (now.difference(sunrise).inMilliseconds /
-            sunrise.difference(sunset).inMilliseconds) *
-        100;
-    path.addArc(rect, math.pi, -(math.pi / 100) * percentage);
+    final bool _isDay = now.isAfter(sunrise) && now.isBefore(sunset);
+    final double _progress = (_isDay)
+        ? (now.difference(sunrise).inSeconds /
+            (sunset.difference(sunrise).inSeconds))
+        : 0;
+
+    path.addArc(rect, math.pi, math.pi * _progress);
     canvas.drawPath(path, paint);
   }
 

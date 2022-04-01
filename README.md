@@ -1,7 +1,4 @@
 # Weather App
-Search the current weather of your city: this app will provide you with every information you need to know!
-
-### TODO:
-1. implement tabBarView with all the favourite cities
-1. implement the favourite cities provider
-1. implement the local storage for app preferences 
+Current weather of my city in real time using Openweathermap API. 
+This software is meant to be installed in a Raspberry Pi running Linux, in combination with a small screen in order to show the UI.
+It is completely coded using the Dart programming language.  

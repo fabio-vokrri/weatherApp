@@ -35,8 +35,9 @@ class _SunriseSunsetState extends State<SunriseSunset> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return SizedBox(
       height: 300,
-      width: 300,
+      width: 400,
       child: Stack(
+        alignment: Alignment.center,
         children: [
           const CustomPaint(
             size: Size(300, 300),
@@ -51,24 +52,21 @@ class _SunriseSunsetState extends State<SunriseSunset> {
               color: Colors.blue[900]!,
             ),
           ),
-          Center(
-            child: Text(
-              'Now: ${formatter.format(DateTime.now())}',
-              style: textTheme.headline2,
-            ),
-          ),
           Positioned(
-            bottom: 115,
+            bottom: 110,
             child: SizedBox(
-              width: 300,
+              width: 340,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     formatter.format(widget.data.sunrise),
                     style: textTheme.bodyText2,
                   ),
-                  const Spacer(),
+                  Text(
+                    'Now: ${formatter.format(DateTime.now())}',
+                    style: textTheme.headline3,
+                  ),
                   Text(
                     formatter.format(widget.data.sunset),
                     style: textTheme.bodyText2,
